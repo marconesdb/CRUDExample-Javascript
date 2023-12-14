@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD Example</title>
+  <style>
+    /* Your CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: rgb(88, 114, 115);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    input, button {
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 5px;
+    }
+
+    #botaoSalvar {
+      background-color: red;
+      border-radius: 5px;
+      color: white;
+    }
+
+    .botaoEditar {
+      background-color: green;
+      border-radius: 5px;
+      color: white;
+    }
+
+    .botaoExcluir {
+      background-color: blue;
+      border-radius: 5px;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      input, button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>CRUD Example</h2>
+
+  <label for="search">Pesquisar:</label>
+  <input type="text" id="search" oninput="searchTable()" placeholder="Digite para pesquisar">
+  <h3>Adicionar/Editar Registro</h3>
+  <label for="name">Nome:</label>
+  <input type="text" id="name" placeholder="Nome">
+
+  <label for="position">Cargo:</label>
+  <input type="text" id="position" placeholder="Cargo">
+
+  <label for="email">E-mail:</label>
+  <input type="text" id="email" placeholder="E-mail">
+
+  <label for="phone">Telefone:</label>
+  <input type="text" id="phone" placeholder="Telefone">
+
+  <label for="cpf">CPF:</label>
+  <input type="text" id="cpf" placeholder="CPF" >
+
+  <button id="botaoSalvar" class="botaoPersonalizado" onclick="saveRecord()">Salvar</button>
+
+  <table id="employeeTable">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Cargo</th>
+        <th>E-mail</th>
+        <th>Telefone</th>
+        <th>CPF</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Os dados serão adicionados aqui dinamicamente -->
+    </tbody>
+  </table>
+
+  <script>
+  // Dados de exemplo para preencher a tabela
+  var data = [];
+
+  // Função para exibir os dados na tabela
+  function displayData() {
+    var tableBody = document.getElementById('employeeTable').getElementsByTagName('tbody')[0];
+    tableBody.innerHTML = '';
+
+    for (var i = 0; i < data.length; i++) {
+      var row = tableBody.insertRow(i);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+      var cell5 = row.insertCell(4);
+      var cell6 = row.insertCell(5);
+
+      cell1.innerHTML = data[i].nome;
+      cell2.innerHTML = data[i].cargo;
+      cell3.innerHTML = data[i].email;
+      cell4.innerHTML = data[i].telefone;
+      cell5.innerHTML = data[i].cpf;
+      cell6.innerHTML = '<button class="botaoEditar" onclick="editRecord(' + i + ')">Editar</button> <button class="botaoExcluir" onclick="deleteRecord(' + i + ')">Excluir</button>';
+    }
+  }
+
+  // Função para salvar/adicionar um novo registro
+  function saveRecord() {
+    var name = document.getElementById('name').value;
+    var position = document.getElementById('position').value;
+    var email = document.getElementById('email').value;
+    var phone = document.getElementById('phone').value;
+    var cpf = document.getElementById('cpf').value;
+
+    // Adicionar novo registro
+    data.push({ nome: name, cargo: position, email: email, telefone: phone, cpf: cpf });
+
+    // Limpar os campos de entrada
+    document.getElementById('name').value = '';
+    document.getElementById('position').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('cpf').value = '';
+
+    // Atualizar a exibição da tabela
+    displayData();
+  }
+
+  // Função para editar um registro
+  function editRecord(index) {
+    // Preencher os campos de entrada com os dados do registro selecionado
+    document.getElementById('name').value = data[index].nome;
+    document.getElementById('position').value = data[index].cargo;
+    document.getElementById('email').value = data[index].email;
+    document.getElementById('phone').value = data[index].telefone;
+    document.getElementById('cpf').value = data[index].cpf;
+  }
+
+  // Função para excluir um registro
+  function deleteRecord(index) {
+    // Implement your logic to delete a record here
+    // You can use data.splice(index, 1) to remove the record from the data array
+    data.splice(index, 1);
+
+    // Atualizar a exibição da tabela
+    displayData();
+  }
+</script>
+
+</body>
+</html>
